@@ -242,7 +242,7 @@ void score() {
     up.set_value(true);
     down.set_value(true);
     intake.move(-127);
-    pros::delay(150);
+    pros::delay(200);
 
 
     // then score
@@ -252,7 +252,7 @@ void score() {
 
 
 void middle() {
-    intake.move(100);
+    intake.move(127);
     up.set_value(false);
     down.set_value(false);
 }
@@ -270,15 +270,15 @@ void autonomous() {
     chassis.setPose(0, 0, 0);
  
     // chassis.moveToPoint(0, 48, 3000);
-    chassis.moveToPoint(0, 33, 2000);
+    chassis.moveToPoint(0, 31.6, 1000);
 
 
     will.toggle();
     load();
     //Turn to face loader
-    chassis.turnToHeading(90, 700);
+    chassis.turnToHeading(89, 450);
     // Go into loader
-    chassis.moveToPoint(19, 33, 700);
+    chassis.moveToPoint(19, 31.6, 800, {.maxSpeed = 45});
 
 
     //STAY HERE UNTIL OPTICAL SENSOR SEES BLUE. ADD CODE HERE.
@@ -289,22 +289,18 @@ void autonomous() {
 
 
     //Back from loader into goal
-    chassis.moveToPoint(-22, 33, 3000, {.forwards = false});
-
-
-    //Score blocks
-    pros::delay(900);
+    chassis.moveToPoint(-22, 34.8, 2500, {.forwards = false, .maxSpeed = 90});
+    pros::delay(400);
 
 
     score();
-    pros::delay(2500);
 
 
 
 
     //leave goal and turn
     will.toggle();
-    chassis.turnToHeading(210, 2000);
+    chassis.turnToHeading(210, 800);
     load();
 
 
@@ -312,36 +308,43 @@ void autonomous() {
 
 
     //get second trio of corner blocks
-    chassis.moveToPoint(-21, -33, 5000, {.maxSpeed = 75});
+    chassis.moveToPoint(-21, -32, 1570, {.maxSpeed = 75});
 
 
-    //turn to loader
-    chassis.turnToHeading(135, 1000);
-    intake.move(0);
+    //turn to algin 2 second part of auto
+    chassis.turnToHeading(135, 750);
 
 
-    //go to loader
-    chassis.moveToPoint(-5, -65, 5000);
+    //go to align to 2nd part of auto
+    chassis.moveToPoint(-5, -63, 830);
 
 
     //turn to face goal
-    chassis.turnToHeading(90, 5000);
+    chassis.turnToHeading(90, 500);
 
 
-    //move back into goal
-    chassis.moveToPoint(-23, -65, 5000, {.forwards = false});
+    //move back into goal and score
+    chassis.moveToPoint(-23, -63, 1100, {.forwards = false});
+    chassis.waitUntilDone();
     score();
     will.toggle();
+    pros::delay(700);
+    chassis.setPose(-23, -63, chassis.getPose().theta);
 
     //go into loader
-    chassis.moveToPoint(9, -65, 900);
+    chassis.moveToPose(20, -63, 90, 1000, {.maxSpeed = 75});
     load();
+    pros::delay(800);
 
     //back away
-    chassis.moveToPoint(-5, -65, 5000, {.forwards = false});
+    chassis.moveToPoint(0, -63, 5000, {.forwards = false});
 
     //go to middle goal
-    chassis.moveToPose(-30, -21, 135, 5000, {.forwards = false});
+    chassis.moveToPose(-42, -21, 135, 5000, {.forwards = false});
+    chassis.waitUntilDone();
+    intake.move(-127);
+    pros::delay(100);
+    middle();
    
     // //GO to middle goal
     // middle_goal.set_value(false);
