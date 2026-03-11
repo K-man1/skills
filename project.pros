@@ -1,7 +1,7 @@
 {
   "py/object": "pros.conductor.project.Project",
   "py/state": {
-    "project_name": "solo awp",
+    "project_name": "Skills (driver & auto)",
     "target": "v5",
     "templates": {
       "LemLib": {
@@ -635,8 +635,8 @@
       }
     },
     "upload_options": {
-      "icon": "pizza",
-      "slot": 1
+      "icon": "planet",
+      "slot": 2
     },
     "use_early_access": false
   }
